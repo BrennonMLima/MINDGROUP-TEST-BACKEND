@@ -3,14 +3,14 @@ import { BaseModel } from "./base.model";
 
 @Entity()
 export class Products extends BaseModel {
-  @Column()
+  @Column({ unique: true })
   name: string;
 
-  @Column({ unique: true })
+  @Column()
   description: string;
 
   @Column()
-  value: number;
+  value: string;
 
   @Column()
   imageUrl: string;

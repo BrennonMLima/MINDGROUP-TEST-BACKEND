@@ -1,3 +1,4 @@
+// user.service.ts
 import { UserDTO } from "../dto/user.dto";
 import { InternalException, NotFoundException } from "../exceptions";
 import { Users } from "../models/users.model";
@@ -14,6 +15,7 @@ export class UserService {
       return users;
     } catch (error) {
       console.error(error);
+      if (error instanceof NotFoundException) throw error;
       throw new InternalException("Erro ao consultar tabela de usuários.");
     }
   }
@@ -26,6 +28,7 @@ export class UserService {
       return user;
     } catch (error) {
       console.error(error);
+      if (error instanceof NotFoundException) throw error;
       throw new InternalException("Erro ao consultar tabela de usuários.");
     }
   }
@@ -38,6 +41,7 @@ export class UserService {
       return user;
     } catch (error) {
       console.error(error);
+      if (error instanceof NotFoundException) throw error;
       throw new InternalException("Erro ao consultar tabela de usuários.");
     }
   }
@@ -56,9 +60,16 @@ export class UserService {
 
       const newUser = await Users.save(user);
 
-      return new UserDTO(newUser.name, newUser.email, newUser.createdAt);
+      return new UserDTO(
+        newUser.name,
+        newUser.email,
+        newUser.createdAt,
+        newUser.id
+      );
     } catch (error) {
-      throw new InternalException(`Erro ao criar usuário: ${error.message}`);
+      console.error(error);
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalException(`Erro ao criar usuário`);
     }
   }
 
@@ -66,6 +77,7 @@ export class UserService {
     try {
       const user = await Users.findOneBy({ id: userId });
       if (!user) throw new NotFoundException("Usuário não encontrado.");
+      if (userData.password) throw new InternalException("Operação incorreta.");
 
       const updatedUser = Users.merge(user, userData);
       await Users.save(updatedUser);
@@ -73,10 +85,37 @@ export class UserService {
       return new UserDTO(
         updatedUser.name,
         updatedUser.email,
-        updatedUser.createdAt
+        updatedUser.createdAt,
+        updatedUser.id
       );
     } catch (error) {
-      throw new InternalException(`Erro ao criar usuário: ${error.message}`);
+      console.error(error);
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalException(`Erro ao criar usuário`);
+    }
+  }
+
+  static async changeUserPassword(
+    userId: string,
+    password: string,
+    newPassword: string
+  ): Promise<void> {
+    try {
+      const user = await Users.findOneBy({ id: userId });
+      if (!user) throw new NotFoundException("Usuário não encontrado.");
+
+      if (!(await SecurityClass.verifyPassword(password, user.password)))
+        throw new InternalException(`Senha incorreta.`);
+
+      const hashNewPassword = await SecurityClass.encryptUserPassword(
+        newPassword
+      );
+      const updatedUser = Users.merge(user, { password: hashNewPassword });
+      await Users.save(updatedUser);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalException(`Erro ao alterar senha de usuário`);
     }
   }
 
@@ -84,7 +123,9 @@ export class UserService {
     try {
       await Users.delete({ id: userId });
     } catch (error) {
-      throw new Error(`Erro ao deletar usuário: ${error.message}`);
+      console.error(error);
+      if (error instanceof NotFoundException) throw error;
+      throw new Error(`Erro ao deletar usuário`);
     }
   }
 }
