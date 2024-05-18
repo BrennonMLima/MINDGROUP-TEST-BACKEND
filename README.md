@@ -1,9 +1,9 @@
 # MINDGROUP-TEST-BACKEND
-##Introdução
+## Introdução
 
 Este repositório contém o código fonte do backend do Sistema de Estoque, desenvolvido como parte de um processo seletivo na Mind Group. O sistema permite o gerenciamento de produtos, controle de entrada e saída de itens, e autenticação de usuários.
 
-##Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 * Backend: Node.js com Express
 * Banco de Dados: MySQL
@@ -11,17 +11,18 @@ Este repositório contém o código fonte do backend do Sistema de Estoque, dese
 * Criptografia: bcrypt
 * Armazenamento de Imagens: Opcional (local ou em formato BLOB no banco de dados)
 
-##Funcionalidades
- ###Produtos:
+## Funcionalidades
+ ### Produtos:
   * Registro, visualização, edição e remoção de produtos.
   * Propriedades: nome, descrição, imagem, valor e quantidade em estoque.
   ### Entradas e Saídas:
   *Controle de entrada e saída de produtos, com registro de data e quantidade.
-  ###Usuários:
-    *Sistema de login e cadastro de usuários com senhas criptografadas.
-    *Propriedades: nome, email e senha.
+  
+  ### Usuários:
+    * Sistema de login e cadastro de usuários com senhas criptografadas.
+    * Propriedades: nome, email e senha.
     
-##Requisitos de Implementação
+## Requisitos de Implementação
 * Utilização de bcrypt para criptografar senhas.
 * Armazenamento de imagens localmente ou no banco de dados em formato BLOB (opcional).
 * Repositórios públicos no GitHub, separados para frontend e backend.
