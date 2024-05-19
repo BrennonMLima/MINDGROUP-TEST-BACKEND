@@ -73,52 +73,6 @@ export class UserService {
     }
   }
 
-  static async updateUser(userId: string, userData: Users): Promise<UserDTO> {
-    try {
-      const user = await Users.findOneBy({ id: userId });
-      if (!user) throw new NotFoundException("Usuário não encontrado.");
-      if (userData.password) throw new InternalException("Operação incorreta.");
-
-      const updatedUser = Users.merge(user, userData);
-      await Users.save(updatedUser);
-
-      return new UserDTO(
-        updatedUser.name,
-        updatedUser.email,
-        updatedUser.createdAt,
-        updatedUser.id
-      );
-    } catch (error) {
-      console.error(error);
-      if (error instanceof NotFoundException) throw error;
-      throw new InternalException(`Erro ao criar usuário`);
-    }
-  }
-
-  static async changeUserPassword(
-    userId: string,
-    password: string,
-    newPassword: string
-  ): Promise<void> {
-    try {
-      const user = await Users.findOneBy({ id: userId });
-      if (!user) throw new NotFoundException("Usuário não encontrado.");
-
-      if (!(await SecurityClass.verifyPassword(password, user.password)))
-        throw new InternalException(`Senha incorreta.`);
-
-      const hashNewPassword = await SecurityClass.encryptUserPassword(
-        newPassword
-      );
-      const updatedUser = Users.merge(user, { password: hashNewPassword });
-      await Users.save(updatedUser);
-    } catch (error) {
-      console.error(error);
-      if (error instanceof NotFoundException) throw error;
-      throw new InternalException(`Erro ao alterar senha de usuário`);
-    }
-  }
-
   static async deleteUser(userId: string): Promise<void> {
     try {
       await Users.delete({ id: userId });

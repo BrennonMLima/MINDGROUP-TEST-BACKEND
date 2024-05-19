@@ -10,8 +10,11 @@ export class Products extends BaseModel {
   description: string;
 
   @Column()
-  value: string;
+  price: string;
 
+  @Column()
+  amount: string;
+  
   @Column()
   imageUrl: string;
 }

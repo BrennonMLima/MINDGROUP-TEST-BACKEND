@@ -34,7 +34,8 @@ export class ProductService {
       const product = Products.create({
         name: productData.name,
         description: productData.description,
-        value: productData.value,
+        price: productData.price,
+        amount: productData.amount,
         imageUrl: productData.imageUrl,
       });
 

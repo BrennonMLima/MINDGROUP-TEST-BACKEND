@@ -63,43 +63,6 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-router.put("/:id", protectedRoute, async (req: Request, res: Response) => {
-  const {
-    body,
-    params: { id },
-  } = req;
-
-  try {
-    const user = await UserService.updateUser(id, body);
-    const userDTO = {
-      email: user.email,
-      name: user.name,
-      createdAt: user.createdAt,
-      id: user.id,
-    } as UserDTO;
-    return res.status(201).send({ users: userDTO });
-  } catch (error) {
-    return res.status(500).send({ message: "Erro ao editar usuário." });
-  }
-});
-
-router.patch(
-  "/change-password/:id",
-  protectedRoute,
-  async (req: Request, res: Response) => {
-    const {
-      body: { password, newPassword },
-      params: { id },
-    } = req;
-
-    try {
-      await UserService.changeUserPassword(id, password, newPassword);
-      return res.status(201).send({ message: "Senha alterada com sucesso." });
-    } catch (error) {
-      return res.status(500).send({ message: "Erro ao alterar senha." });
-    }
-  }
-);
 
 router.delete("/:id", protectedRoute, async (req: Request, res: Response) => {
   const { id } = req.params;
