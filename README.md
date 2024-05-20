@@ -16,7 +16,7 @@ Este repositório contém o código fonte do backend do Sistema de Estoque, dese
   * Registro, visualização, edição e remoção de produtos.
   * Propriedades: nome, descrição, imagem, valor e quantidade em estoque.
   ### Entradas e Saídas:
-  *Controle de entrada e saída de produtos, com registro de data e quantidade.
+  * Controle de entrada e saída de produtos, com registro de data e quantidade.
   
 ## Usuários:
    * Sistema de login e cadastro de usuários com senhas criptografadas.
