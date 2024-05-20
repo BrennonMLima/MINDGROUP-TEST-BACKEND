@@ -18,9 +18,9 @@ Este repositório contém o código fonte do backend do Sistema de Estoque, dese
   ### Entradas e Saídas:
   *Controle de entrada e saída de produtos, com registro de data e quantidade.
   
-  ### Usuários:
-    * Sistema de login e cadastro de usuários com senhas criptografadas.
-    * Propriedades: nome, email e senha.
+## Usuários:
+   * Sistema de login e cadastro de usuários com senhas criptografadas.
+   * Propriedades: nome, email e senha.
     
 ## Requisitos de Implementação
 * Utilização de bcrypt para criptografar senhas.
