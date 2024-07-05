@@ -1,4 +1,3 @@
-// user.service.ts
 import { UserDTO } from "../dto/user.dto";
 import { InternalException, NotFoundException } from "../exceptions";
 import { Users } from "../models/users.model";

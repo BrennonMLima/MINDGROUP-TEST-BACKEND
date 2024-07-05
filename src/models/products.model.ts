@@ -3,7 +3,7 @@ import { BaseModel } from "./base.model";
 
 @Entity()
 export class Products extends BaseModel {
-  @Column({ unique: true })
+  @Column()
   name: string;
 
   @Column()

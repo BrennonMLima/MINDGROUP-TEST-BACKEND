@@ -5,10 +5,7 @@ import { ProductService } from "../services/products.service";
 
 const router = express.Router();
 
-router.get(
-  "/",
-  protectedRoute,
-  async (req: Request, res: Response, next: NextFunction) => {
+router.get("/",protectedRoute,async (req: Request, res: Response, next: NextFunction) => {
     try {
       const products = await ProductService.getAllProducts();
       return res.send({ products: products });

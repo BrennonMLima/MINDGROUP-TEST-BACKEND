@@ -31,7 +31,7 @@ export class SecurityClass {
       const isCorrectPassword = await this.verifyPassword(password, user.password)
       
       if (isCorrectPassword) {
-        return jwt.sign(userData.toJson(), "SECRET", { expiresIn: "3h" });
+        return jwt.sign(userData.toJson(), "SECRET", { expiresIn: "24h" });
       }
     } catch (error) {
       if (error instanceof NotFoundException) throw error;

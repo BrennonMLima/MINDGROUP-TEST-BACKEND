@@ -6,7 +6,6 @@ import {
   UnathorizedExecption,
 } from "../exceptions";
 
-// Middleware de tratamento de erros personalizado
 const exceptionsMiddleware = (
   error: Error,
   req: Request,
